@@ -19,21 +19,7 @@ parsing, per-user isolation, and PII redaction.
 
 ---
 
-## Launch Video
 
-<div align="center">
-
-[![Watch the WealthWise AI launch video](https://img.shields.io/badge/▶️_Watch_the_Launch_Video-1a1f2b?style=for-the-badge&logo=googledrive&logoColor=34d399)](https://drive.google.com/file/d/1xK6NZLXqlXKR88WmD_cypPduBUR7WM2W/view?usp=sharing)
-
-</div>
-
-> Click to watch on Google Drive. (GitHub can't embed an inline player for Drive videos.)
-
-## Dashboard
-
-![WealthWise AI Dashboard](WealthWise AI%20Dashboard.png)
-
----
 
 ## What it does
 
