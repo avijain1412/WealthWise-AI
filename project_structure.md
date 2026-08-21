@@ -41,5 +41,5 @@ wealthwise-ai/
 ├── README.md
 ├── project_structure.md
 ├── LICENSE
-└── fingenius-notebook-gemini-agent.ipynb
+
 ```
