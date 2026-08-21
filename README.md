@@ -9,12 +9,6 @@
 
 > **Upload your real bank statement → get an instant financial dashboard and chat with an AI advisor grounded in your actual spending.**
 
-WealthWise AI started life in **2024 as a Gemini-powered Colab notebook** exploring five Gen AI
-capabilities. It worked — but it lived inside cells you had to run top to bottom. This
-repository is the **rebuild**: the same five capabilities, now wired into a real, deployable
-full-stack application with a polished dashboard, a live AI advisor, real bank-statement
-parsing, per-user isolation, and PII redaction.
-
 > *From a notebook nobody could use → to a product you open in a browser.*
 
 ---
