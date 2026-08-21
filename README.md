@@ -189,17 +189,6 @@ This is a public-demo-ready app, so isolation and privacy were designed in:
 
 ---
 
-## Deployment
-
-The repo includes a `render.yaml` for one-click [Render](https://render.com) deploys:
-
-1. Push to GitHub and create a Render **Blueprint** from the repo.
-2. Set `OPENAI_API_KEY` as an environment variable in the Render dashboard.
-3. Deploy → you get a public `https://…onrender.com` URL.
-
-> **No login = your API key pays for every visitor.** Before exposing it publicly, set a
-> **hard spending limit** on your OpenAI account. For a portfolio, the launch video + this
-> repo are the always-on showcase; bring the live demo up on demand.
 
 ### Configuration (environment variables)
 
@@ -248,25 +237,8 @@ wealthwise-ai/
 
 ---
 
-## Origin: the notebook
 
-The original **`fingenius-notebook-gemini-agent.ipynb`** is kept in the repo as the project's
-starting point — a Gemini-based walkthrough of the five Gen AI capabilities. Everything in
-`src/backend/wealthwise/` is the productionized rebuild of those ideas on an OpenAI + LangGraph stack.
 
 ---
 
-## License
 
-MIT — see [LICENSE](LICENSE).
-
-## Author
-
-<div align="center">
-
-### **Anuj Dev Singh**
-*AI/ML Enthusiast · Data Science Student · Gen AI Developer*
-
-*"Bridging the gap between advanced AI and practical financial tools for everyone."*
-
-</div>
