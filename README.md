@@ -58,7 +58,7 @@ parsing, per-user isolation, and PII redaction.
 
 ```mermaid
 flowchart LR
-    subgraph Client["Frontend UIs (Streamlit / HTML)"]
+    subgraph Client["Streamlit Dashboard"]
         UI["Dashboard<br/>KPIs, charts, categories"]
         Chat["AI Advisor<br/>interactive chat"]
     end
@@ -96,7 +96,7 @@ flowchart LR
     T4 -->|embed search| OpenAI
 ```
 
-**Flow:** The client UIs connect to the backend securely. Uploads are normalized and
+**Flow:** The Streamlit dashboard connects to the backend securely. Uploads are normalized and
 categorized server-side, then a snapshot drives the dashboard. The chat grounds a LangGraph
 agent in your data and routes everything through a redaction layer before it reaches OpenAI.
 
