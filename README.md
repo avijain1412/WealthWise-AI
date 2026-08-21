@@ -23,7 +23,7 @@ parsing, per-user isolation, and PII redaction.
 
 <div align="center">
 
-[![Watch the WealthWise AI launch video](https://img.shields.io/badge/▶_Watch_the_Launch_Video-1a1f2b?style=for-the-badge&logo=googledrive&logoColor=34d399)](https://drive.google.com/file/d/1xK6NZLXqlXKR88WmD_cypPduBUR7WM2W/view?usp=sharing)
+[![Watch the WealthWise AI launch video](https://img.shields.io/badge/▶️_Watch_the_Launch_Video-1a1f2b?style=for-the-badge&logo=googledrive&logoColor=34d399)](https://drive.google.com/file/d/1xK6NZLXqlXKR88WmD_cypPduBUR7WM2W/view?usp=sharing)
 
 </div>
 
@@ -58,14 +58,14 @@ parsing, per-user isolation, and PII redaction.
 
 ```mermaid
 flowchart LR
-    subgraph Browser
+    subgraph Client["Frontend UIs (Streamlit / HTML)"]
         UI["Dashboard<br/>KPIs, charts, categories"]
-        Chat["AI Advisor<br/>sticky chat rail"]
+        Chat["AI Advisor<br/>interactive chat"]
     end
 
-    subgraph Server["FastAPI - server.py"]
-        Session["Session cookie<br/>HttpOnly, 256-bit, per-user"]
-        Ingest["Statement ingest<br/>CSV/XLSX, debit/credit<br/>day-first dates, INR detect"]
+    subgraph Backend["Backend Services (src/backend/)"]
+        Session["Session Management<br/>isolated per-user"]
+        Ingest["Statement ingest<br/>CSV/XLSX, debit/credit"]
         Redact["PII redaction<br/>account and ref numbers stripped"]
         Snapshot["Dashboard snapshot<br/>KPIs, budget, cash flow"]
     end
@@ -96,7 +96,7 @@ flowchart LR
     T4 -->|embed search| OpenAI
 ```
 
-**Flow:** the browser holds only a server-issued session cookie. Uploads are normalized and
+**Flow:** The client UIs connect to the backend securely. Uploads are normalized and
 categorized server-side, then a snapshot drives the dashboard. The chat grounds a LangGraph
 agent in your data and routes everything through a redaction layer before it reaches OpenAI.
 
@@ -127,7 +127,7 @@ can reach any of them on demand.
 | **Vector store** | ChromaDB (`langchain-chroma`) |
 | **Backend** | FastAPI + Uvicorn |
 | **Data** | pandas · NumPy · scikit-learn · openpyxl |
-| **Frontend** | Single-file dashboard (vanilla HTML/CSS/JS, no build step) |
+| **Frontend** | Streamlit Dashboard|
 
 ---
 
@@ -158,7 +158,7 @@ Simpler alternatives:
 
 ```bash
 python main.py        # terminal chat with the agent
-streamlit run src/streamlit_ui/app.py  # basic Streamlit UI
+streamlit run src/streamlit_ui/app.py  # full-featured Streamlit UI
 ```
 
 > The first run builds a local Chroma vector store from the knowledge base (cached in `.wealthwise_chroma/`).
@@ -234,25 +234,30 @@ For a tight public demo, lower `WEALTHWISE_DAILY_LIMIT` (e.g. `150`) and `WEALTH
 ## Project Structure
 
 ```
-financial_genius_agent/
-├── src/backend/wealthwise/                 # Application package
-│   ├── config.py             # Model config + LLM/embedding factories
-│   ├── privacy.py            # PII redaction before any LLM call
-│   ├── data/                 # Sample transactions + financial knowledge base
-│   ├── analysis/             # Categorization (structured output) + embeddings
-│   ├── rag/                  # Chroma knowledge base + retriever
-│   ├── tools/                # Agent tools: 5 calculators, RAG lookup,
-│   │                         #   categorize, per-session semantic search
-│   ├── dashboard.py          # KPIs / budget / cash flow snapshot (+ advisor grounding)
-│   └── agent/                # LangGraph conversational advisor (graph.py)
-├── server.py                 # FastAPI server: sessions, upload, dashboard, chat
-├── web/index.html            # Single-file dashboard + AI chat rail
-├── main.py                   # CLI chat entry point
-├── app.py                    # Streamlit UI
-├── render.yaml               # One-click deploy config
+wealthwise-ai/
+├── src/
+│   ├── backend/
+│   │   ├── wealthwise/                 # Core domain logic
+│   │   │   ├── config.py               # Model config + LLM factories
+│   │   │   ├── privacy.py              # PII redaction layer
+│   │   │   ├── data/                   # Sample transactions + knowledge base
+│   │   │   ├── analysis/               # Categorization & embeddings
+│   │   │   ├── rag/                    # Chroma knowledge base
+│   │   │   ├── tools/                  # Agent tools & calculators
+│   │   │   ├── dashboard.py            # KPIs & cash flow snapshot
+│   │   │   └── agent/                  # LangGraph conversational advisor
+│   │   └── server.py                   # FastAPI server (API & sessions)
+│   ├── frontend/
+│   │   └── index.html                  # HTML/JS dashboard
+│   └── streamlit_ui/
+│       └── app.py                      # Full-featured Streamlit dashboard
+├── main.py                             # CLI chat entry point
+├── test_upload.py                      # Statement parser tests
+├── render.yaml                         # One-click deploy config
+├── pyproject.toml                      # Project metadata
 ├── requirements.txt
 ├── .env.example
-└── fingenius-notebook-gemini-agent.ipynb   # Original Colab notebook (the origin story)
+└── fingenius-notebook-gemini-agent.ipynb # Original Colab notebook
 ```
 
 ---
