@@ -117,8 +117,8 @@ can reach any of them on demand.
 
 ```bash
 # 1. Clone
-git clone https://github.com/anujdevsingh/financial_genius_agent.git
-cd financial_genius_agent
+git clone https://github.com/avijain1412/WealthWise-AI.git
+cd WealthWise-AI
 
 # 2. Install
 pip install -r requirements.txt
