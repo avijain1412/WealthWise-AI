@@ -76,9 +76,7 @@ flowchart LR
     T4 -->|embed search| OpenAI
 ```
 
-**Flow:** The Streamlit dashboard connects to the backend securely. Uploads are normalized and
-categorized server-side, then a snapshot drives the dashboard. The chat grounds a LangGraph
-agent in your data and routes everything through a redaction layer before it reaches OpenAI.
+**Flow:** The Streamlit dashboard interacts with the backend services to process uploaded statements and generate the financial dashboard. Uploads are normalized and categorized, then a dashboard snapshot drives the visualizations. The chat grounds a LangGraph agent in the user’s financial data and routes sensitive information through a redaction layer before it reaches OpenAI.
 
 ---
 
@@ -107,7 +105,7 @@ can reach any of them on demand.
 | **Vector store** | ChromaDB (`langchain-chroma`) |
 | **Backend** | FastAPI + Uvicorn |
 | **Data** | pandas · NumPy · scikit-learn · openpyxl |
-| **Frontend** | Streamlit Dashboard|
+| **Frontend** | Streamlit |
 
 ---
 
@@ -127,18 +125,16 @@ pip install -r requirements.txt
 cp .env.example .env        # then edit .env and set OPENAI_API_KEY
 
 # 4. Run the dashboard
-uvicorn src.backend.server:app --reload --port 8000
+streamlit run src/streamlit_ui/app.py
 # open http://localhost:8000
 ```
 
-Click **Upload statement**, pick your bank's CSV/Excel export, and the dashboard + advisor
-update to your real data. No upload? It runs on a built-in sample dataset.
+Upload a bank statement through the Streamlit dashboard, and the application will process the data, generate your financial dashboard, and update the AI advisor with your financial information. If no statement is uploaded, the application runs using a built-in sample dataset.
 
-Simpler alternatives:
+For a terminal-based experience, you can also run:
 
 ```bash
-python main.py        # terminal chat with the agent
-streamlit run src/streamlit_ui/app.py  # full-featured Streamlit UI
+python main.py
 ```
 
 > The first run builds a local Chroma vector store from the knowledge base (cached in `.wealthwise_chroma/`).
@@ -200,6 +196,18 @@ For a tight public demo, lower `WEALTHWISE_DAILY_LIMIT` (e.g. `150`) and `WEALTH
 
 ---
 
+---
+
+```markdown
+## Testing
+
+A lightweight test is included for statement ingestion and normalization.
+
+Run:
+
+```bash
+python test_upload.py
+
 ## Project Structure
 
 ```
@@ -216,8 +224,7 @@ wealthwise-ai/
 │   │   │   ├── dashboard.py            # KPIs & cash flow snapshot
 │   │   │   └── agent/                  # LangGraph conversational advisor
 │   │   └── server.py                   # FastAPI server (API & sessions)
-│   ├── frontend/
-│   │   └── index.html                  # HTML/JS dashboard
+│   │ 
 │   └── streamlit_ui/
 │       └── app.py                      # Full-featured Streamlit dashboard
 ├── main.py                             # CLI chat entry point
